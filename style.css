@@ -578,9 +578,6 @@ button:active {
 
 @media screen and (max-width: 720px) {
     body {
-        width: 100%;
-        min-width: 0;
-
         padding: 10px;
         overflow-x: hidden;
         overflow-y: auto;
@@ -589,52 +586,54 @@ button:active {
     .app-layout {
         display: flex;
         flex-direction: column;
-
         width: 100%;
-        max-width: none;
         height: auto;
-
         gap: 12px;
     }
 
+    /*
+     * Allows the Entry, Summary and Saved Entries panels
+     * to participate directly in the app-layout ordering.
+     */
     .left-column {
-        display: flex;
-        flex-direction: column;
-
-        width: 100%;
-        height: auto;
-
-        gap: 12px;
-        overflow: visible;
+        display: contents;
     }
 
+    /* 1. Army Challenge Tracker */
     .entry-panel {
         order: 1;
     }
 
-    .summary-panel {
+    /* 2. All three charts */
+    .charts-column {
         order: 2;
 
-        max-height: none;
-        overflow: visible;
-    }
-
-    .saved-entries-panel {
-        order: 3;
-
-        max-height: 450px;
-        overflow-y: auto;
-    }
-
-    .charts-column {
         display: flex;
         flex-direction: column;
 
         width: 100%;
         height: auto;
-
         gap: 12px;
+
         overflow: visible;
+    }
+
+    /* 3. Progress Summary */
+    .summary-panel {
+        order: 3;
+
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+    }
+
+    /* 4. Saved Entries */
+    .saved-entries-panel {
+        order: 4;
+
+        width: 100%;
+        max-height: 450px;
+        overflow-y: auto;
     }
 
     .panel,
@@ -647,9 +646,12 @@ button:active {
         height: auto;
     }
 
+    .chart-panel {
+        display: block;
+    }
+
     .chart-container {
         position: relative;
-
         width: 100%;
         height: 300px;
         min-width: 0;
