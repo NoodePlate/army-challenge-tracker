@@ -1,3 +1,7 @@
+/* ======================================================
+   GLOBAL
+   ====================================================== */
+
 * {
     box-sizing: border-box;
 }
@@ -8,73 +12,66 @@ html {
 
 body {
     margin: 0;
-    padding: 24px;
+    padding: 12px;
+
     font-family: Arial, sans-serif;
     color: #1f2937;
+
     background-color: #f3f4f6;
 }
 
 
 /* ======================================================
-   THREE-COLUMN DESKTOP LAYOUT
+   SHARED LAYOUT
    ====================================================== */
 
 .app-layout {
     width: 100%;
     max-width: 1900px;
     margin: 0 auto;
-
-    display: grid;
-    grid-template-columns:
-        minmax(280px, 0.9fr)
-        minmax(280px, 0.9fr)
-        minmax(600px, 2.2fr);
-
-    gap: 24px;
-    align-items: start;
 }
 
-.dashboard-column {
+.left-column,
+.charts-column {
     min-width: 0;
 }
 
-.entry-column,
-.summary-column,
-.charts-column {
-    height: calc(100vh - 24px);
-    display: grid;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    overflow: hidden;
-}
-
-
-/* ======================================================
-   PANELS
-   ====================================================== */
-
 .panel {
-    padding: 22px;
+    padding: 16px;
+
     border: 1px solid #d8dde5;
     border-radius: 12px;
+
     background-color: #ffffff;
+
     box-shadow:
         0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
+
+/* ======================================================
+   HEADINGS
+   ====================================================== */
+
 h1 {
-    margin: 0 0 24px;
-    font-size: 1.8rem;
+    margin: 0 0 18px;
+
+    font-size: 1.7rem;
     line-height: 1.2;
 }
 
 h2 {
-    margin: 0 0 18px;
-    font-size: 1.4rem;
+    margin: 0 0 14px;
+
+    font-size: 1.3rem;
+    line-height: 1.2;
 }
 
 h3 {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
+
+    font-size: 1.05rem;
+    line-height: 1.2;
 }
 
 
@@ -84,20 +81,27 @@ h3 {
 
 label {
     display: block;
-    margin-top: 16px;
-    margin-bottom: 6px;
+
+    margin-top: 12px;
+    margin-bottom: 5px;
+
     font-weight: 600;
 }
 
 input {
     display: block;
+
     width: 100%;
-    min-height: 44px;
-    padding: 10px 12px;
+    min-height: 42px;
+
+    padding: 8px 10px;
+
     border: 1px solid #aeb6c2;
     border-radius: 6px;
+
     background-color: #ffffff;
     color: #111827;
+
     font: inherit;
 }
 
@@ -108,9 +112,10 @@ input:focus {
 
 button {
     width: 100%;
-    min-height: 46px;
-    margin-top: 22px;
-    padding: 10px 16px;
+    min-height: 42px;
+
+    margin-top: 16px;
+    padding: 8px 14px;
 
     border: none;
     border-radius: 7px;
@@ -120,6 +125,7 @@ button {
 
     font: inherit;
     font-weight: 700;
+
     cursor: pointer;
 }
 
@@ -131,9 +137,31 @@ button:active {
     transform: translateY(1px);
 }
 
+.data-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.data-actions button {
+    margin-top: 0;
+
+    background-color: #475569;
+}
+
+.data-actions button:hover {
+    background-color: #334155;
+}
+
+#importFile {
+    display: none !important;
+}
+
 
 /* ======================================================
-   SUMMARY
+   PROGRESS SUMMARY
    ====================================================== */
 
 #summary {
@@ -141,18 +169,43 @@ button:active {
 }
 
 .summary-card {
-    margin-bottom: 16px;
-    padding: 18px;
+    margin-bottom: 12px;
+    padding: 14px;
 
     border: 1px solid #d7dce3;
     border-radius: 10px;
 
     background-color: #f8fafc;
 
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    box-shadow:
+        0 2px 6px rgba(15, 23, 42, 0.06);
 }
 
+.summary-card:last-of-type {
+    margin-bottom: 0;
+}
+
+.summary-card h3 {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.summary-card p {
+    margin: 5px 0;
+
+    line-height: 1.35;
+}
+
+.main-progress {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
 /* Category accent colours */
+
 .running-summary {
     border-left: 5px solid #ef4444;
 }
@@ -165,23 +218,12 @@ button:active {
     border-left: 5px solid #a855f7;
 }
 
-.summary-card:last-of-type {
-    margin-bottom: 0;
-}
 
-.summary-card p {
-    margin: 7px 0;
-    line-height: 1.4;
-}
-
-.main-progress {
-    font-size: 1.1rem;
-    font-weight: 700;
-}
+/* Deadline panel */
 
 .deadline-information {
-    margin-top: 16px;
-    padding: 16px;
+    margin-top: 12px;
+    padding: 13px;
 
     border-left: 5px solid #2563eb;
     border-radius: 8px;
@@ -190,8 +232,9 @@ button:active {
 }
 
 .deadline-information p {
-    margin: 4px 0;
-    line-height: 1.5;
+    margin: 3px 0;
+
+    line-height: 1.4;
 }
 
 
@@ -202,36 +245,35 @@ button:active {
 #entries {
     display: flex;
     flex-direction: column;
+
     gap: 10px;
 }
 
 .entry-card {
-    padding: 12px;
+    padding: 11px;
 
     border: 1px solid #d7dce3;
     border-radius: 7px;
 
     background-color: #f8fafc;
-    line-height: 1.5;
+
+    line-height: 1.45;
 }
 
 .entry-card button {
     width: auto;
-    min-height: 36px;
-    margin-top: 10px;
-    padding: 7px 12px;
+    min-height: 34px;
+
+    margin-top: 8px;
+    padding: 6px 11px;
 
     background-color: #dc2626;
+
     font-size: 0.9rem;
 }
 
 .entry-card button:hover {
     background-color: #b91c1c;
-}
-
-.saved-entries-panel {
-    max-height: 600px;
-    overflow-y: auto;
 }
 
 
@@ -240,156 +282,141 @@ button:active {
    ====================================================== */
 
 .chart-panel {
-    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
     overflow: hidden;
 }
 
 .chart-panel h2 {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 
 .chart-container {
     position: relative;
+
     width: 100%;
-    max-width: 1000px;
-    height: 400px;
-    margin: 0 auto;
+    min-width: 0;
+    min-height: 0;
 }
 
 .chart-container canvas {
+    display: block;
+
     width: 100% !important;
     height: 100% !important;
 }
 
+
 /* ======================================================
-   DESKTOP: FIT COMPLETE DASHBOARD IN VIEWPORT
+   DESKTOP
+   Entry + summary + saved entries on the left.
+   Three charts on the right.
    ====================================================== */
 
-@media (min-width: 1251px) {
+@media (min-width: 1001px) {
     body {
-        padding: 12px;
+        height: 100vh;
+
         overflow: hidden;
     }
 
     .app-layout {
-        max-width: 1900px;
         height: calc(100vh - 24px);
 
+        display: grid;
         grid-template-columns:
-            minmax(300px, 0.85fr)
-            minmax(300px, 0.85fr)
-            minmax(760px, 2.3fr);
+            minmax(600px, 0.95fr)
+            minmax(700px, 1.65fr);
 
         gap: 14px;
+
         align-items: stretch;
     }
 
-    /*
-     * Left column:
-     * fixed form at the top,
-     * Saved Entries fills remaining height.
-     */
-    .entry-column {
-        height: 100%;
+
+    /* LEFT SIDE */
+
+    .left-column {
         min-height: 0;
 
         display: grid;
-        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-columns:
+            minmax(280px, 1fr)
+            minmax(280px, 1fr);
+
+        grid-template-rows:
+            auto
+            minmax(0, 1fr);
 
         gap: 12px;
+
         overflow: hidden;
     }
 
-    /*
-     * Middle column:
-     * summary uses its natural height.
-     */
-    .summary-column {
-        height: 100%;
-        min-height: 0;
-        overflow: hidden;
+    .entry-panel {
+        grid-column: 1;
+        grid-row: 1;
     }
 
-    /*
-     * Right column:
-     * three full charts share available height.
-     */
-    .charts-column {
-        height: 100%;
+    .summary-panel {
+        grid-column: 2;
+        grid-row: 1 / 3;
+
         min-height: 0;
 
-        display: grid;
-        grid-template-rows: repeat(3, minmax(0, 1fr));
-
-        gap: 8px;
-        overflow: hidden;
-    }
-
-    .panel {
-        padding: 12px;
-        border-radius: 10px;
-    }
-
-    h1 {
-        margin-bottom: 12px;
-        font-size: 1.45rem;
-    }
-
-    h2 {
-        margin-bottom: 8px;
-        font-size: 1.15rem;
-    }
-
-    h3 {
-        margin-bottom: 5px;
-        font-size: 1rem;
-    }
-
-
-    /* Compact entry form */
-
-    .entry-panel label {
-        margin-top: 6px;
-        margin-bottom: 2px;
-        font-size: 0.85rem;
-    }
-
-    .entry-panel input {
-        min-height: 34px;
-        padding: 5px 8px;
-    }
-
-    .entry-panel button {
-        min-height: 36px;
-        margin-top: 10px;
-        padding: 6px 10px;
-    }
-
-
-    /* Independently scrolling Saved Entries */
-
-    .saved-entries-panel {
-        min-height: 0;
-        max-height: none;
         overflow-y: auto;
     }
 
-    .entry-card {
-        padding: 8px;
-        font-size: 0.82rem;
+    .saved-entries-panel {
+        grid-column: 1;
+        grid-row: 2;
+
+        min-height: 0;
+
+        overflow-y: auto;
     }
 
-    .entry-card button {
-        min-height: 29px;
-        margin-top: 5px;
-        padding: 4px 8px;
+
+    /* Compact the desktop form */
+
+    .entry-panel label {
+        margin-top: 8px;
+        margin-bottom: 3px;
+
+        font-size: 0.9rem;
+    }
+
+    .entry-panel input {
+        min-height: 36px;
+
+        padding: 6px 8px;
+    }
+
+    .entry-panel button {
+        min-height: 37px;
+
+        margin-top: 11px;
+        padding: 6px 10px;
+    }
+
+    .entry-panel h1 {
+        margin-bottom: 12px;
+
+        font-size: 1.5rem;
     }
 
 
     /* Compact summary */
 
-    #summary {
-        height: auto;
+    .summary-panel {
+        padding: 13px;
+    }
+
+    .summary-panel h2 {
+        margin-bottom: 10px;
+
+        font-size: 1.2rem;
     }
 
     .summary-card {
@@ -404,174 +431,216 @@ button:active {
 
     .summary-card p {
         margin: 3px 0;
-        font-size: 0.86rem;
-        line-height: 1.2;
+
+        font-size: 0.88rem;
+        line-height: 1.25;
     }
 
-    .summary-card .main-progress {
-        margin-bottom: 6px;
-        font-size: 0.95rem;
+    .main-progress {
+        font-size: 0.98rem;
     }
 
     .deadline-information {
         margin-top: 8px;
-        padding: 9px 12px;
+        padding: 10px 12px;
     }
 
     .deadline-information p {
         margin: 2px 0;
-        font-size: 0.86rem;
+
+        font-size: 0.88rem;
     }
 
 
-    /* Complete chart inside each allocated row */
+    /* Compact saved entries */
 
-    .chart-panel {
-        min-width: 0;
+    .saved-entries-panel {
+        padding: 12px;
+    }
+
+    .saved-entries-panel h2 {
+        margin-bottom: 9px;
+
+        font-size: 1.15rem;
+    }
+
+    .entry-card {
+        padding: 8px;
+
+        font-size: 0.84rem;
+    }
+
+    .entry-card button {
+        min-height: 29px;
+
+        margin-top: 5px;
+        padding: 4px 8px;
+    }
+
+
+    /* RIGHT SIDE */
+
+    .charts-column {
         min-height: 0;
-        padding: 7px 10px;
+        height: 100%;
 
         display: grid;
-        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-rows:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 8px;
 
         overflow: hidden;
     }
 
+    .chart-panel {
+        padding: 7px 10px;
+
+        display: grid;
+        grid-template-rows:
+            auto
+            minmax(0, 1fr);
+    }
+
     .chart-panel h2 {
         margin: 0 0 2px;
-        font-size: 0.95rem;
+
+        font-size: 0.98rem;
         line-height: 1.15;
     }
 
     .chart-container {
-        position: relative;
-
-        width: 100%;
         height: 100%;
-        min-width: 0;
-        min-height: 0;
-        max-width: none;
-
-        margin: 0;
-    }
-
-    .chart-container canvas {
-        display: block;
-        width: 100% !important;
-        height: 100% !important;
     }
 }
 
 
 /* ======================================================
-   TABLET
+   TABLET AND SMALL LAPTOP
+   Stacked sections for readability.
    ====================================================== */
 
-@media (min-width: 721px) and (max-width: 1250px) {
+@media (min-width: 721px) and (max-width: 1000px) {
     body {
-        padding: 16px;
-    }
+        padding: 14px;
 
-    .app-layout {
-        grid-template-columns:
-            minmax(280px, 1fr)
-            minmax(280px, 1fr);
-
-        gap: 16px;
-    }
-
-    .entry-column,
-    .summary-column,
-    .charts-column {
-        display: flex;
-        height: auto;
-        overflow: visible;
-    }
-
-    .charts-column {
-        grid-column: 1 / -1;
-    }
-
-    .chart-container {
-        width: 100%;
-        height: 380px;
-        min-height: 0;
-    }
-
-    .chart-container canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
-
-
-/* ======================================================
-   MOBILE
-   ====================================================== */
-
-@media (max-width: 720px) {
-    body {
-        padding: 12px;
         overflow: auto;
     }
 
     .app-layout {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+
+        gap: 14px;
     }
 
-    .entry-column,
-    .summary-column,
+    .left-column {
+        display: grid;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+    .entry-panel {
+        grid-column: 1;
+    }
+
+    .summary-panel {
+        grid-column: 2;
+        grid-row: 1 / 3;
+    }
+
+    .saved-entries-panel {
+        grid-column: 1;
+
+        max-height: 500px;
+
+        overflow-y: auto;
+    }
+
     .charts-column {
         display: flex;
-        width: 100%;
-        height: auto;
-        overflow: visible;
+        flex-direction: column;
+
+        gap: 14px;
+    }
+
+    .chart-container {
+        height: 380px;
+    }
+}
+
+
+/* ======================================================
+   MOBILE
+   Single-column layout.
+   ====================================================== */
+
+@media (max-width: 720px) {
+    body {
+        padding: 10px;
+
+        overflow: auto;
+    }
+
+    .app-layout {
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .left-column {
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .entry-panel {
+        order: 1;
+    }
+
+    .summary-panel {
+        order: 2;
+    }
+
+    .saved-entries-panel {
+        order: 3;
+
+        max-height: 450px;
+
+        overflow-y: auto;
+    }
+
+    .charts-column {
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
     }
 
     .panel {
-        padding: 16px;
+        width: 100%;
+
+        padding: 14px;
         border-radius: 9px;
     }
 
     h1 {
-        font-size: 1.55rem;
+        font-size: 1.5rem;
     }
 
     h2 {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
-    .saved-entries-panel {
-        max-height: none;
-        overflow: visible;
+    .chart-panel {
+        height: auto;
     }
 
     .chart-container {
-        width: 100%;
         height: 300px;
-        min-height: 0;
     }
-
-    .chart-container canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
-
-.data-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-.data-actions button {
-    margin-top: 0;
-    background-color: #475569;
-}
-
-.data-actions button:hover {
-    background-color: #334155;
 }
