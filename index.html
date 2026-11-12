@@ -12,17 +12,15 @@
 
 <main class="app-layout">
 
-    <!-- LEFT COLUMN: ENTRY FORM AND SAVED ENTRIES -->
-    <section class="dashboard-column entry-column">
+    <!-- LEFT SIDE -->
+    <section class="left-column">
 
+        <!-- ENTRY FORM -->
         <div class="panel entry-panel">
             <h1>Army Challenge Tracker</h1>
 
             <label for="datetime">Date and Time</label>
-            <input
-                type="datetime-local"
-                id="datetime"
-            >
+            <input type="datetime-local" id="datetime">
 
             <label for="run">Run (km)</label>
             <input
@@ -36,21 +34,22 @@
             <input
                 type="number"
                 id="pushup"
-                min="0"
                 step="1"
+                min="0"
             >
 
             <label for="situp">Sit-ups</label>
             <input
                 type="number"
                 id="situp"
-                min="0"
                 step="1"
+                min="0"
             >
 
             <button id="saveBtn" type="button">
                 Save Entry
             </button>
+
             <div class="data-actions">
                 <button id="exportBtn" type="button">
                     Export Data
@@ -69,18 +68,9 @@
             </div>
         </div>
 
-        <div class="panel saved-entries-panel">
-            <h2>Saved Entries</h2>
-            <div id="entries"></div>
-        </div>
 
-    </section>
-
-
-    <!-- MIDDLE COLUMN: PROGRESS SUMMARY -->
-    <section class="dashboard-column summary-column">
-
-        <section id="summary" class="panel">
+        <!-- PROGRESS SUMMARY -->
+        <section id="summary" class="panel summary-panel">
             <h2>Progress Summary</h2>
 
             <div class="summary-card running-summary">
@@ -88,54 +78,46 @@
 
                 <p class="main-progress">
                     <span id="runCompleted">0</span>
-                    /
-                    60 km
+                    / 60 km
                 </p>
 
                 <p>
                     Remaining:
-                    <span id="runRemaining">60</span>
-                    km
+                    <span id="runRemaining">60</span> km
                 </p>
 
                 <p>
                     Required daily:
-                    <span id="runDaily">0</span>
-                    km
+                    <span id="runDaily">0</span> km
                 </p>
 
                 <p>
                     Required weekly:
-                    <span id="runWeekly">0</span>
-                    km
+                    <span id="runWeekly">0</span> km
                 </p>
             </div>
 
             <div class="summary-card pushup-summary">
-                 <h3>Push-ups</h3>
+                <h3>Push-ups</h3>
 
                 <p class="main-progress">
                     <span id="pushupCompleted">0</span>
-                    /
-                    600 reps
+                    / 600 reps
                 </p>
 
                 <p>
                     Remaining:
-                    <span id="pushupRemaining">600</span>
-                    reps
+                    <span id="pushupRemaining">600</span> reps
                 </p>
 
                 <p>
                     Required daily:
-                    <span id="pushupDaily">0</span>
-                    reps
+                    <span id="pushupDaily">0</span> reps
                 </p>
 
                 <p>
                     Required weekly:
-                    <span id="pushupWeekly">0</span>
-                    reps
+                    <span id="pushupWeekly">0</span> reps
                 </p>
             </div>
 
@@ -144,26 +126,22 @@
 
                 <p class="main-progress">
                     <span id="situpCompleted">0</span>
-                    /
-                    600 reps
+                    / 600 reps
                 </p>
 
                 <p>
                     Remaining:
-                    <span id="situpRemaining">600</span>
-                    reps
+                    <span id="situpRemaining">600</span> reps
                 </p>
 
                 <p>
                     Required daily:
-                    <span id="situpDaily">0</span>
-                    reps
+                    <span id="situpDaily">0</span> reps
                 </p>
 
                 <p>
                     Required weekly:
-                    <span id="situpWeekly">0</span>
-                    reps
+                    <span id="situpWeekly">0</span> reps
                 </p>
             </div>
 
@@ -180,11 +158,18 @@
             </div>
         </section>
 
+
+        <!-- SAVED ENTRIES -->
+        <div class="panel saved-entries-panel">
+            <h2>Saved Entries</h2>
+            <div id="entries"></div>
+        </div>
+
     </section>
 
 
-    <!-- RIGHT COLUMN: CHARTS -->
-    <section class="dashboard-column charts-column">
+    <!-- RIGHT SIDE: CHARTS -->
+    <section class="charts-column">
 
         <div class="panel chart-panel">
             <h2>Running Progress</h2>
