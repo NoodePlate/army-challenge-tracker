@@ -1,668 +1,206 @@
-/* ======================================================
-   GLOBAL
-   ====================================================== */
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Army Challenge Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<main class="app-layout">
+
+    <!-- LEFT SIDE -->
+    <section class="left-column">
+
+        <!-- ENTRY FORM -->
+        <div class="panel entry-panel">
+            <h1>Army Challenge Tracker</h1>
+
+            <label for="datetime">Date and Time</label>
+            <input type="datetime-local" id="datetime">
+
+            <label for="run">Run (km)</label>
+            <input
+                type="number"
+                id="run"
+                step="0.01"
+                min="0"
+            >
+
+            <label for="pushup">Push-ups</label>
+            <input
+                type="number"
+                id="pushup"
+                step="1"
+                min="0"
+            >
+
+            <label for="situp">Sit-ups</label>
+            <input
+                type="number"
+                id="situp"
+                step="1"
+                min="0"
+            >
+
+            <button id="saveBtn" type="button">
+                Save Entry
+            </button>
+
+            <div class="data-actions">
+                <button id="exportBtn" type="button">
+                    Export Data
+                </button>
+
+                <button id="importBtn" type="button">
+                    Import Data
+                </button>
+
+                <input
+                    type="file"
+                    id="importFile"
+                    accept=".json,application/json"
+                    hidden
+                >
+            </div>
+        </div>
+
+
+        <!-- PROGRESS SUMMARY -->
+        <section id="summary" class="panel summary-panel">
+            <h2>Progress Summary</h2>
+
+            <div class="summary-card running-summary">
+                <h3>Running</h3>
+
+                <p class="main-progress">
+                    <span id="runCompleted">0</span>
+                    / 60 km
+                </p>
+
+                <p>
+                    Remaining:
+                    <span id="runRemaining">60</span> km
+                </p>
+
+                <p>
+                    Required daily:
+                    <span id="runDaily">0</span> km
+                </p>
+
+                <p>
+                    Required weekly:
+                    <span id="runWeekly">0</span> km
+                </p>
+            </div>
+
+            <div class="summary-card pushup-summary">
+                <h3>Push-ups</h3>
+
+                <p class="main-progress">
+                    <span id="pushupCompleted">0</span>
+                    / 600 reps
+                </p>
 
-* {
-    box-sizing: border-box;
-}
+                <p>
+                    Remaining:
+                    <span id="pushupRemaining">600</span> reps
+                </p>
 
-html {
-    font-size: 16px;
-}
+                <p>
+                    Required daily:
+                    <span id="pushupDaily">0</span> reps
+                </p>
 
-body {
-    margin: 0;
-    padding: 12px;
+                <p>
+                    Required weekly:
+                    <span id="pushupWeekly">0</span> reps
+                </p>
+            </div>
 
-    font-family: Arial, sans-serif;
-    color: #1f2937;
+            <div class="summary-card situp-summary">
+                <h3>Sit-ups</h3>
 
-    background-color: #f3f4f6;
-}
+                <p class="main-progress">
+                    <span id="situpCompleted">0</span>
+                    / 600 reps
+                </p>
 
+                <p>
+                    Remaining:
+                    <span id="situpRemaining">600</span> reps
+                </p>
 
-/* ======================================================
-   SHARED LAYOUT
-   ====================================================== */
+                <p>
+                    Required daily:
+                    <span id="situpDaily">0</span> reps
+                </p>
 
-.app-layout {
-    width: 100%;
-    max-width: 1900px;
-    margin: 0 auto;
-}
+                <p>
+                    Required weekly:
+                    <span id="situpWeekly">0</span> reps
+                </p>
+            </div>
 
-.left-column,
-.charts-column {
-    min-width: 0;
-}
+            <div class="deadline-information">
+                <p>
+                    Days remaining:
+                    <strong id="daysRemaining">0</strong>
+                </p>
 
-.panel {
-    padding: 16px;
+                <p>
+                    Deadline:
+                    <strong>20 December 2026</strong>
+                </p>
+            </div>
+        </section>
 
-    border: 1px solid #d8dde5;
-    border-radius: 12px;
 
-    background-color: #ffffff;
+        <!-- SAVED ENTRIES -->
+        <div class="panel saved-entries-panel">
+            <h2>Saved Entries</h2>
+            <div id="entries"></div>
+        </div>
 
-    box-shadow:
-        0 2px 8px rgba(15, 23, 42, 0.06);
-}
+    </section>
 
 
-/* ======================================================
-   HEADINGS
-   ====================================================== */
+    <!-- RIGHT SIDE: CHARTS -->
+    <section class="charts-column">
 
-h1 {
-    margin: 0 0 18px;
+        <div class="panel chart-panel">
+            <h2>Running Progress</h2>
 
-    font-size: 1.7rem;
-    line-height: 1.2;
-}
+            <div class="chart-container">
+                <canvas id="runChart"></canvas>
+            </div>
+        </div>
 
-h2 {
-    margin: 0 0 14px;
+        <div class="panel chart-panel">
+            <h2>Push-up Progress</h2>
 
-    font-size: 1.3rem;
-    line-height: 1.2;
-}
+            <div class="chart-container">
+                <canvas id="pushupChart"></canvas>
+            </div>
+        </div>
 
-h3 {
-    margin: 0 0 8px;
+        <div class="panel chart-panel">
+            <h2>Sit-up Progress</h2>
 
-    font-size: 1.05rem;
-    line-height: 1.2;
-}
+            <div class="chart-container">
+                <canvas id="situpChart"></canvas>
+            </div>
+        </div>
 
+    </section>
 
-/* ======================================================
-   ENTRY FORM
-   ====================================================== */
+</main>
 
-label {
-    display: block;
+<script src="app.js"></script>
 
-    margin-top: 12px;
-    margin-bottom: 5px;
+</body>
 
-    font-weight: 600;
-}
-
-input {
-    display: block;
-
-    width: 100%;
-    min-height: 42px;
-
-    padding: 8px 10px;
-
-    border: 1px solid #aeb6c2;
-    border-radius: 6px;
-
-    background-color: #ffffff;
-    color: #111827;
-
-    font: inherit;
-}
-
-input:focus {
-    border-color: #2563eb;
-    outline: 3px solid rgba(37, 99, 235, 0.15);
-}
-
-button {
-    width: 100%;
-    min-height: 42px;
-
-    margin-top: 16px;
-    padding: 8px 14px;
-
-    border: none;
-    border-radius: 7px;
-
-    background-color: #2563eb;
-    color: #ffffff;
-
-    font: inherit;
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #1d4ed8;
-}
-
-button:active {
-    transform: translateY(1px);
-}
-
-.data-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    gap: 8px;
-    margin-top: 8px;
-}
-
-.data-actions button {
-    margin-top: 0;
-
-    background-color: #475569;
-}
-
-.data-actions button:hover {
-    background-color: #334155;
-}
-
-#importFile {
-    display: none !important;
-}
-
-
-/* ======================================================
-   PROGRESS SUMMARY
-   ====================================================== */
-
-#summary {
-    margin: 0;
-}
-
-.summary-card {
-    margin-bottom: 12px;
-    padding: 14px;
-
-    border: 1px solid #d7dce3;
-    border-radius: 10px;
-
-    background-color: #f8fafc;
-
-    box-shadow:
-        0 2px 6px rgba(15, 23, 42, 0.06);
-}
-
-.summary-card:last-of-type {
-    margin-bottom: 0;
-}
-
-.summary-card h3 {
-    margin-bottom: 8px;
-    padding-bottom: 6px;
-
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.summary-card p {
-    margin: 5px 0;
-
-    line-height: 1.35;
-}
-
-.main-progress {
-    font-size: 1.05rem;
-    font-weight: 700;
-}
-
-
-/* Category accent colours */
-
-.running-summary {
-    border-left: 5px solid #ef4444;
-}
-
-.pushup-summary {
-    border-left: 5px solid #22c55e;
-}
-
-.situp-summary {
-    border-left: 5px solid #a855f7;
-}
-
-
-/* Deadline panel */
-
-.deadline-information {
-    margin-top: 12px;
-    padding: 13px;
-
-    border-left: 5px solid #2563eb;
-    border-radius: 8px;
-
-    background-color: #eff6ff;
-}
-
-.deadline-information p {
-    margin: 3px 0;
-
-    line-height: 1.4;
-}
-
-
-/* ======================================================
-   SAVED ENTRIES
-   ====================================================== */
-
-#entries {
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.entry-card {
-    padding: 11px;
-
-    border: 1px solid #d7dce3;
-    border-radius: 7px;
-
-    background-color: #f8fafc;
-
-    line-height: 1.45;
-}
-
-.entry-card button {
-    width: auto;
-    min-height: 34px;
-
-    margin-top: 8px;
-    padding: 6px 11px;
-
-    background-color: #dc2626;
-
-    font-size: 0.9rem;
-}
-
-.entry-card button:hover {
-    background-color: #b91c1c;
-}
-
-
-/* ======================================================
-   CHARTS
-   ====================================================== */
-
-.chart-panel {
-    min-width: 0;
-    min-height: 0;
-
-    overflow: hidden;
-}
-
-.chart-panel h2 {
-    margin-bottom: 4px;
-}
-
-.chart-container {
-    position: relative;
-
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-}
-
-.chart-container canvas {
-    display: block;
-
-    width: 100% !important;
-    height: 100% !important;
-}
-
-
-/* ======================================================
-   DESKTOP
-   Entry + summary + saved entries on the left.
-   Three charts on the right.
-   ====================================================== */
-
-@media (min-width: 1001px) {
-    body {
-        height: 100vh;
-
-        overflow: hidden;
-    }
-
-    .app-layout {
-        height: calc(100vh - 24px);
-
-        display: grid;
-        grid-template-columns:
-            minmax(600px, 0.95fr)
-            minmax(700px, 1.65fr);
-
-        gap: 14px;
-
-        align-items: stretch;
-    }
-
-
-    /* LEFT SIDE */
-
-    .left-column {
-        min-height: 0;
-
-        display: grid;
-        grid-template-columns:
-            minmax(280px, 1fr)
-            minmax(280px, 1fr);
-
-        grid-template-rows:
-            auto
-            minmax(0, 1fr);
-
-        gap: 12px;
-
-        overflow: hidden;
-    }
-
-    .entry-panel {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    .summary-panel {
-        grid-column: 2;
-        grid-row: 1 / 3;
-
-        min-height: 0;
-
-        overflow-y: auto;
-    }
-
-    .saved-entries-panel {
-        grid-column: 1;
-        grid-row: 2;
-
-        min-height: 0;
-
-        overflow-y: auto;
-    }
-
-
-    /* Compact the desktop form */
-
-    .entry-panel label {
-        margin-top: 8px;
-        margin-bottom: 3px;
-
-        font-size: 0.9rem;
-    }
-
-    .entry-panel input {
-        min-height: 36px;
-
-        padding: 6px 8px;
-    }
-
-    .entry-panel button {
-        min-height: 37px;
-
-        margin-top: 11px;
-        padding: 6px 10px;
-    }
-
-    .entry-panel h1 {
-        margin-bottom: 12px;
-
-        font-size: 1.5rem;
-    }
-
-
-    /* Compact summary */
-
-    .summary-panel {
-        padding: 13px;
-    }
-
-    .summary-panel h2 {
-        margin-bottom: 10px;
-
-        font-size: 1.2rem;
-    }
-
-    .summary-card {
-        margin-bottom: 8px;
-        padding: 10px 12px;
-    }
-
-    .summary-card h3 {
-        margin-bottom: 5px;
-        padding-bottom: 4px;
-    }
-
-    .summary-card p {
-        margin: 3px 0;
-
-        font-size: 0.88rem;
-        line-height: 1.25;
-    }
-
-    .main-progress {
-        font-size: 0.98rem;
-    }
-
-    .deadline-information {
-        margin-top: 8px;
-        padding: 10px 12px;
-    }
-
-    .deadline-information p {
-        margin: 2px 0;
-
-        font-size: 0.88rem;
-    }
-
-
-    /* Compact saved entries */
-
-    .saved-entries-panel {
-        padding: 12px;
-    }
-
-    .saved-entries-panel h2 {
-        margin-bottom: 9px;
-
-        font-size: 1.15rem;
-    }
-
-    .entry-card {
-        padding: 8px;
-
-        font-size: 0.84rem;
-    }
-
-    .entry-card button {
-        min-height: 29px;
-
-        margin-top: 5px;
-        padding: 4px 8px;
-    }
-
-
-    /* RIGHT SIDE */
-
-    .charts-column {
-        min-height: 0;
-        height: 100%;
-
-        display: grid;
-        grid-template-rows:
-            repeat(3, minmax(0, 1fr));
-
-        gap: 8px;
-
-        overflow: hidden;
-    }
-
-    .chart-panel {
-        padding: 7px 10px;
-
-        display: grid;
-        grid-template-rows:
-            auto
-            minmax(0, 1fr);
-    }
-
-    .chart-panel h2 {
-        margin: 0 0 2px;
-
-        font-size: 0.98rem;
-        line-height: 1.15;
-    }
-
-    .chart-container {
-        height: 100%;
-    }
-}
-
-
-/* ======================================================
-   TABLET AND SMALL LAPTOP
-   Stacked sections for readability.
-   ====================================================== */
-
-@media (min-width: 721px) and (max-width: 1000px) {
-    body {
-        padding: 14px;
-
-        overflow: auto;
-    }
-
-    .app-layout {
-        display: flex;
-        flex-direction: column;
-
-        gap: 14px;
-    }
-
-    .left-column {
-        display: grid;
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 14px;
-    }
-
-    .entry-panel {
-        grid-column: 1;
-    }
-
-    .summary-panel {
-        grid-column: 2;
-        grid-row: 1 / 3;
-    }
-
-    .saved-entries-panel {
-        grid-column: 1;
-
-        max-height: 500px;
-
-        overflow-y: auto;
-    }
-
-    .charts-column {
-        display: flex;
-        flex-direction: column;
-
-        gap: 14px;
-    }
-
-    .chart-container {
-        height: 380px;
-    }
-}
-
-/* ======================================================
-   MOBILE
-   Must remain at the bottom of style.css
-   ====================================================== */
-
-@media screen and (max-width: 720px) {
-    body {
-        padding: 10px;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-
-    .app-layout {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        gap: 12px;
-    }
-
-    /*
-     * Allows the Entry, Summary and Saved Entries panels
-     * to participate directly in the app-layout ordering.
-     */
-    .left-column {
-        display: contents;
-    }
-
-    /* 1. Army Challenge Tracker */
-    .entry-panel {
-        order: 1;
-    }
-
-    /* 2. All three charts */
-    .charts-column {
-        order: 2;
-
-        display: flex;
-        flex-direction: column;
-
-        width: 100%;
-        height: auto;
-        gap: 12px;
-
-        overflow: visible;
-    }
-
-    /* 3. Progress Summary */
-    .summary-panel {
-        order: 3;
-
-        width: 100%;
-        max-height: none;
-        overflow: visible;
-    }
-
-    /* 4. Saved Entries */
-    .saved-entries-panel {
-        order: 4;
-
-        width: 100%;
-        max-height: 450px;
-        overflow-y: auto;
-    }
-
-    .panel,
-    .entry-panel,
-    .summary-panel,
-    .saved-entries-panel,
-    .chart-panel {
-        width: 100%;
-        min-width: 0;
-        height: auto;
-    }
-
-    .chart-panel {
-        display: block;
-    }
-
-    .chart-container {
-        position: relative;
-        width: 100%;
-        height: 300px;
-        min-width: 0;
-    }
-
-    .chart-container canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    #importFile {
-        display: none !important;
-    }
-}
+</html>
